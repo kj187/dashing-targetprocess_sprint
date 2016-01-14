@@ -1,0 +1,4 @@
+<div class="sprint-name" data-bind="sprintName | truncate 38"></div>
+<h1 data-bind="sprintDaysLeft"></h1>
+<div class="sprint-end-date" data-bind="'day' | pluralize sprintDaysLeft, false | append ' left'"></div>
+<div class="sprint-end-date" data-bind="sprintEndDate"></div>
