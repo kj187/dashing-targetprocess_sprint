@@ -1,0 +1,218 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>TargetProcess sprint by kj187</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-dark.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>TargetProcess sprint</h1>
+        <p>TargetProcess sprint info widget for Dashing-JS</p>
+        <p class="view"><a href="https://github.com/kj187/dashing-targetprocess_sprint">View the Project on GitHub <small>kj187/dashing-targetprocess_sprint</small></a></p>
+        <ul>
+          <li><a href="https://github.com/kj187/dashing-targetprocess_sprint/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/kj187/dashing-targetprocess_sprint/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/kj187/dashing-targetprocess_sprint">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="targetprocess-sprint-widget" class="anchor" href="#targetprocess-sprint-widget" aria-hidden="true"><span class="octicon octicon-link"></span></a>TargetProcess sprint widget</h1>
+
+<p>Author: <a href="https://github.com/kj187">Julian Kleinhans</a> · Blog: <a href="http://blog.kj187.de">http://blog.kj187.de</a></p>
+
+<p><a href="https://github.com/fabiocaseri/dashing-js">Dashing-JS</a> is a NodeJS port of <a href="http://dashing.io/">Dashing</a>, an Sinatra based framework that lets you build beautiful dashboards.</p>
+
+<p>The <a href="https://www.targetprocess.com/">TargetProcess</a> sprint widget is a small widget which provides the team the end date of the current sprint and their left working days count. </p>
+
+<h2>
+<a id="preview" class="anchor" href="#preview" aria-hidden="true"><span class="octicon octicon-link"></span></a>Preview</h2>
+
+<p><img src="http://res.cloudinary.com/kj187/image/upload/v1452759600/targetprocess_sprint_xqqzeg.png" alt="TargetProcess sprint widget"></p>
+
+<h2>
+<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requirements</h2>
+
+<p><a href="https://github.com/fabiocaseri/dashing-js">Dashing-JS</a></p>
+
+<pre lang="ssh"><code>$ npm install -g dashing-js
+</code></pre>
+
+<p>Widget dependencies</p>
+
+<div class="highlight highlight-source-shell"><pre>$ npm install tp-api
+$ npm install cron
+$ npm install strsplit
+$ npm install moment</pre></div>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<div class="highlight highlight-source-shell"><pre>$ dashing-js install https://github.com/kj187/dashing-targetprocess_sprint/archive/master.zip</pre></div>
+
+<p>Create a new directory <code>config</code> on your root directory.
+Move the <code>widgets/targetprocess_sprint/config.targetprocess_sprint.sample.js</code> file to this directory and rename it to <code>config.targetprocess_sprint.js</code>.</p>
+
+<pre><code>assets/
+  ...
+config/
+  config.targetprocess_sprint.js
+  ...
+dashboards/
+  ...
+jobs/
+  ...
+...
+</code></pre>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>To include the widget on your dashboard, add the following snippet to the dashboard layout file:</p>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">li</span> <span class="pl-e">data-row</span>=<span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span> <span class="pl-e">data-col</span>=<span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span> <span class="pl-e">data-sizex</span>=<span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span> <span class="pl-e">data-sizey</span>=<span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span>&gt;
+  &lt;<span class="pl-ent">div</span> <span class="pl-e">data-id</span>=<span class="pl-s"><span class="pl-pds">"</span>targetprocess_sprint<span class="pl-pds">"</span></span> <span class="pl-e">data-view</span>=<span class="pl-s"><span class="pl-pds">"</span>TargetprocessSprint<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">div</span>&gt;
+  &lt;<span class="pl-ent">i</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>fa fa-clock-o icon-background<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">i</span>&gt;
+&lt;/<span class="pl-ent">li</span>&gt;</pre></div>
+
+<p>Or if you use Jade as your favorite template engine </p>
+
+<div class="highlight highlight-text-jade"><pre>li<span class="pl-c1">(</span><span class="pl-e">data-row</span>=<span class="pl-s">'1'</span>, <span class="pl-e">data-col</span>=<span class="pl-s">'1'</span>, <span class="pl-e">data-sizex</span>=<span class="pl-s">'1'</span>, <span class="pl-e">data-sizey</span>=<span class="pl-s">'1'</span><span class="pl-c1">)</span>
+  div<span class="pl-c1">(</span><span class="pl-e">data-id</span>=<span class="pl-s">'targetprocess_sprint'</span>, <span class="pl-e">data-view</span>=<span class="pl-s">'TargetprocessSprint'</span>, <span class="pl-e">class</span>=<span class="pl-s">'widget'</span><span class="pl-c1">)</span>
+  i<span class="pl-c1">(</span><span class="pl-e">class</span>=<span class="pl-s">'fa fa-clock-o icon-background'</span><span class="pl-c1">)</span></pre></div>
+
+<h2>
+<a id="settings" class="anchor" href="#settings" aria-hidden="true"><span class="octicon octicon-link"></span></a>Settings</h2>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">module</span>.<span class="pl-smi">exports</span> <span class="pl-k">=</span> {
+
+    eventName<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>targetprocess_sprint<span class="pl-pds">'</span></span>,
+    cronInterval<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>15 * * * * *<span class="pl-pds">'</span></span>,
+
+    api<span class="pl-k">:</span> {
+        host<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>www.host.com<span class="pl-pds">'</span></span>,
+        acid<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>2439DD66D093095E290CF98FB987D4B7<span class="pl-pds">'</span></span>,
+        version<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>1<span class="pl-pds">'</span></span>,
+        protocol<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>https<span class="pl-pds">'</span></span>,
+        token<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>bcdefabcdefabcdefgbcdefabcdefabcdefg<span class="pl-pds">'</span></span>
+        <span class="pl-c">// or instead of an API token</span>
+        <span class="pl-c">// username: '',</span>
+        <span class="pl-c">// password: '',</span>
+    }
+}</pre></div>
+
+<h3>
+<a id="global-settings" class="anchor" href="#global-settings" aria-hidden="true"><span class="octicon octicon-link"></span></a>Global settings</h3>
+
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Example</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>eventName</td>
+<td>github_pullrequests</td>
+<td>Event name, must be the same as the <code>data-id</code> attribute</td>
+</tr>
+<tr>
+<td>cronInterval</td>
+<td>1 * * * * *</td>
+<td>Click <a href="https://github.com/ncb000gt/node-cron">here</a> for available cron patterns</td>
+</tr>
+</tbody>
+</table>
+
+<h3>
+<a id="api-settings" class="anchor" href="#api-settings" aria-hidden="true"><span class="octicon octicon-link"></span></a>API settings</h3>
+
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Example</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>host</td>
+<td><a href="http://www.host.com">www.host.com</a></td>
+<td>Host of your TargetProcess</td>
+</tr>
+<tr>
+<td>protocol</td>
+<td>https</td>
+<td>Http or https</td>
+</tr>
+<tr>
+<td>acid</td>
+<td>2439DD66D093095E290CF98FB987D4B7</td>
+<td>ACID ID if you want to fetch something from a specific project</td>
+</tr>
+<tr>
+<td>version</td>
+<td>1</td>
+<td>TargetProcess API version, dont change</td>
+</tr>
+<tr>
+<td>token</td>
+<td>bcdefabcdefabcdefgbcdefabcdefabcdefg</td>
+<td>TargetProcess API token</td>
+</tr>
+<tr>
+<td>username</td>
+<td>julian.kleinhans</td>
+<td>If you dont have an API token, you can also use your username/password. But I highly recommend to use an API token</td>
+</tr>
+<tr>
+<td>password</td>
+<td>xxxxxxx</td>
+<td>Your TargetProcess password</td>
+</tr>
+</tbody>
+</table>
+
+<h2>
+<a id="changelog" class="anchor" href="#changelog" aria-hidden="true"><span class="octicon octicon-link"></span></a>Changelog</h2>
+
+<h3>
+<a id="release-100" class="anchor" href="#release-100" aria-hidden="true"><span class="octicon octicon-link"></span></a>release-1.0.0</h3>
+
+<ul>
+<li>First release</li>
+</ul>
+
+<h2>
+<a id="other-dashing-js-widgets" class="anchor" href="#other-dashing-js-widgets" aria-hidden="true"><span class="octicon octicon-link"></span></a>Other Dashing-JS widgets</h2>
+
+<p>Do you know that I also created some other Dashing-JS widgets? Try out</p>
+
+<ul>
+<li><a href="http://goo.gl/X3WM3r">Jenkins Job widget</a></li>
+<li><a href="http://goo.gl/QqEVkl">GitHub PullRequest widget</a></li>
+</ul>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/kj187">kj187</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
