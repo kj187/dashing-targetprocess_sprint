@@ -29,7 +29,21 @@ $ npm install moment
 ```shell
 $ dashing-js install https://github.com/kj187/dashing-targetprocess_sprint/archive/master.zip
 ```
-Move the `widgets/targetprocess_sprint/config.targetprocess_sprint.sample.js` file to the dashboard root directory and rename it to `config.targetprocess_sprint.js`. 
+Create a new directory `config` on your root directory.
+Move the `widgets/targetprocess_sprint/config.targetprocess_sprint.sample.js` file to this directory and rename it to `config.targetprocess_sprint.js`.
+ 
+```
+assets/
+  ...
+config/
+  config.targetprocess_sprint.js
+  ...
+dashboards/
+  ...
+jobs/
+  ...
+...
+```
 
 ## Usage
 To include the widget on your dashboard, add the following snippet to the dashboard layout file:
