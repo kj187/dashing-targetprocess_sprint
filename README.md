@@ -107,5 +107,8 @@ module.exports = {
 ## Other Dashing-JS widgets
 Do you know that I also created some other Dashing-JS widgets? Try out
 
-* [Jenkins Job widget](http://goo.gl/X3WM3r)
-* [GitHub PullRequest widget](http://goo.gl/QqEVkl)
+* [Jenkins Job widget](http://kj187.github.io/dashing-jenkins_job/)
+* [GitHub PullRequest widget](http://kj187.github.io/dashing-github_pullrequests/)
+* [TargetProcess Impediments widget](http://kj187.github.io/dashing-targetprocess_impediments/)
+* [TargetProcess Sprint widget](http://kj187.github.io/dashing-targetprocess_sprint/)
+* [TargetProcess Burndown widget](http://kj187.github.io/dashing-targetprocess_burndown/)
