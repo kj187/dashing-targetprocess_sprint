@@ -1,19 +1,19 @@
 .widget-targetprocess-sprint {
-  background-color: coral;
-  cursor: default;
+  background-color: #e26912;
+  vertical-align: top !important;
 
   h1 {
-    font-size: 111px;
-    margin: 0px;
-  }
-
-  .sprint-name {
     font-weight: bold;
     font-size: 36px;
   }
 
+  .sprint-days-left {
+    font-size: 110px;
+    font-weight: bold;
+  }
+
   .sprint-end-date {
     margin-top: 0;
-    font-size: 29px;
+    font-size: 25px;
   }
 }
