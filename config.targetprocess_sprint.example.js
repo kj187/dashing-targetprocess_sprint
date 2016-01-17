@@ -6,7 +6,7 @@ module.exports = {
 
     api: {
         host: 'www.host.com',
-        acid: '2439DD66D093095E290CF98FB987D4B7',
+        context: '2439DD66D093095E290CF98FB987D4B7',
         version: '1',
         protocol: 'https',
         token: 'bcdefabcdefabcdefgbcdefabcdefabcdefg'

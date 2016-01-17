@@ -9,7 +9,7 @@ try {
     var apiClient = targetprocessApi({
         domain: config.api.host,
         token: config.api.token,
-        acid: config.api.acid,
+        //acid: config.api.context,
         version: config.api.version,
         protocol: config.api.protocol,
     });
@@ -42,6 +42,7 @@ try {
     new cronJob(config.cronInterval, function() {
         apiClient('TeamIterations')
             .where("IsCurrent eq 'true'")
+            .context(config.api.context)
             .then(function(error, data) {
                 if (error) return console.log('Error:', error)
                 var sprint = data[0];
