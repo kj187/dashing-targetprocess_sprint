@@ -10,6 +10,9 @@ The [TargetProcess](https://www.targetprocess.com/) sprint widget is a small wid
 
 ![TargetProcess sprint widget](http://res.cloudinary.com/kj187/image/upload/v1453150290/targetprocess_sprint_xqqzeg.png)
 
+## Example Dashboard
+![Example](http://res.cloudinary.com/kj187/image/upload/v1453152816/dashboard_example_stb2dc.png)
+
 ## Requirements
 
 [Dashing-JS](https://github.com/fabiocaseri/dashing-js)
