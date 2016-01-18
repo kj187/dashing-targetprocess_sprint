@@ -8,7 +8,7 @@ The [TargetProcess](https://www.targetprocess.com/) sprint widget is a small wid
  
 ## Preview 
 
-![TargetProcess sprint widget](http://res.cloudinary.com/kj187/image/upload/v1452759600/targetprocess_sprint_xqqzeg.png)
+![TargetProcess sprint widget](http://res.cloudinary.com/kj187/image/upload/v1453150290/targetprocess_sprint_xqqzeg.png)
 
 ## Requirements
 
