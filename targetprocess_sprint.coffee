@@ -4,6 +4,8 @@ class Dashing.TargetprocessSprint extends Dashing.Widget
     # This is fired when the widget is done being rendered
 
   onData: (data) ->
-    # Handle incoming data
-    # You can access the html node of this widget with `@node`
-    # Example: $(@node).fadeOut().fadeIn() will make the node flash each time data comes in.
+
+    if data.sprintHealth
+      $('.sprint-points-health .done').css('width', data.sprintPointsDone + '%')
+      $('.sprint-points-health .remain').css('width', (100 - (data.sprintPointsDone + data.sprintPointsInProgress)) + '%')
+      $('.sprint-points-health .in-progress').css('width', data.sprintPointsInProgress + '%')

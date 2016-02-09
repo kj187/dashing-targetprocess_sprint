@@ -1,4 +1,16 @@
 <h1  data-bind="sprintName | truncate 38"></h1>
-<div class="sprint-days-left" data-bind="sprintDaysLeft"></div>
-<div class="sprint-end-date" data-bind="'day' | pluralize sprintDaysLeft, false | append ' left'"></div>
-<div class="sprint-end-date" data-bind="sprintEndDate"></div>
+
+<div class="sprint-days-left">
+    <div class="amount" data-bind="sprintDaysLeft"></div>
+    <div class="label">
+        <div class="date" data-bind="'day' | pluralize sprintDaysLeft, false | append ' left'"></div>
+        <div class="date" data-bind="sprintEndDate"></div>
+    </div>
+</div>
+
+<div class="health-title">Overall sprint progress (Story Points)</div>
+<div class="sprint-health sprint-points-health">
+    <div class="remain" data-bind="sprintPointsRemain"></div>
+    <div class="in-progress" data-bind="sprintPointsInProgress"></div>
+    <div class="done" data-bind="sprintPointsDone"></div>
+</div>

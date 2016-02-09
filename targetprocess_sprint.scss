@@ -1,5 +1,5 @@
 .widget-targetprocess-sprint {
-  background-color: #e26912;
+  background-color: #666;
   vertical-align: top !important;
 
   h1 {
@@ -7,13 +7,68 @@
     font-size: 36px;
   }
 
+
   .sprint-days-left {
-    font-size: 110px;
-    font-weight: bold;
+    border-top: 1px solid #ffffff;
+    padding-top: 10px;
+
+    .label {
+      width: 168px;
+      float: right;
+
+      .date {
+        margin-top: 0;
+        font-size: 20px;
+      }
+    }
+    .amount {
+      font-size: 60px;
+      font-weight: bold;
+      width: 50px;
+      float: left;
+      margin: -15px 26px 0 28px;
+    }
   }
 
-  .sprint-end-date {
-    margin-top: 0;
-    font-size: 25px;
+  .health-title {
+    clear: both;
+    border-top: 1px solid #ffffff;
+    margin: 10px 0 3px 0;
+    padding-top: 33px;
+    font-size: 12px;
+    text-align: left;
   }
+
+  .sprint-health {
+    width: 281px;
+    clear: both;
+    margin-bottom: 10px;
+
+    div {
+      box-sizing: border-box;
+      float:left;
+      padding: 3px;
+      min-width: 20px;
+    }
+
+    .remain {
+      background-color: #D04437;
+      border: 0px !important;
+      width: 10px;
+    }
+
+    .in-progress {
+      color: #666666;
+      background-color: #FFD351;
+      border: 0px !important;
+      width: 10px;
+    }
+
+    .done {
+      background-color: #14892C;
+      border: 0px !important;
+      width: 10px;
+    }
+  }
+
 }

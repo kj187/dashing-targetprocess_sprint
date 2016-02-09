@@ -40,6 +40,45 @@ try {
     };
 
     new cronJob(config.cronInterval, function() {
+
+        var sprint = {
+            points: {
+                effort: 0,
+                inProgress: 0,
+                remain: 0,
+                done: 0
+            }
+        }
+
+        apiClient('UserStories')
+            .where("Teamiteration.IsCurrent eq 'true'")
+            .context(config.api.context)
+            .then(function(error, data) {
+                if (error) return console.log('Error:', error)
+                if (data.length > 0) {
+                    data.forEach(function (story) {
+                        sprint.points.effort += story.Effort;
+                        sprint.points.done += story.EffortCompleted;
+                        sprint.points.remain += story.EffortToDo;
+                        if (story.EntityState.Name != 'Open' && story.EntityState.Name != 'Done') {
+                            sprint.points.inProgress += story.Effort;
+                        }
+                    });
+
+                    var inProgress = Math.ceil(sprint.points.inProgress);
+                    var remain = Math.ceil(sprint.points.remain) - inProgress;
+                    var done = Math.ceil(sprint.points.done);
+
+                    send_event(config.eventName, {
+                        sprintPointsRemain: remain,
+                        sprintPointsInProgress: inProgress,
+                        sprintPointsDone: done,
+                        sprintHealth: true
+                    })
+                }
+            });
+
+
         apiClient('TeamIterations')
             .where("IsCurrent eq 'true'")
             .context(config.api.context)
