@@ -40,7 +40,7 @@
   }
 
   .sprint-health {
-    width: 281px;
+    width: 100%;
     clear: both;
     margin-bottom: 10px;
 
@@ -48,26 +48,25 @@
       box-sizing: border-box;
       float:left;
       padding: 3px;
-      min-width: 20px;
+      min-width: 8%;
+      height: 25px;
+      font-size: 12px;
     }
 
     .remain {
       background-color: #D04437;
       border: 0px !important;
-      width: 10px;
     }
 
     .in-progress {
       color: #666666;
       background-color: #FFD351;
       border: 0px !important;
-      width: 10px;
     }
 
     .done {
       background-color: #14892C;
       border: 0px !important;
-      width: 10px;
     }
   }
 

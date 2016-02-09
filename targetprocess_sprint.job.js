@@ -39,17 +39,47 @@ try {
         return index;
     };
 
-    new cronJob(config.cronInterval, function() {
+    var getSprintPointHealthWidths = function(effort, remain, inProgress, done) {
+        var width = {};
+        var maxWidth = 100;
+        var counter = 0;
 
-        var sprint = {
-            points: {
-                effort: 0,
-                inProgress: 0,
-                remain: 0,
-                done: 0
+        if (effort > maxWidth) {
+            var maxWidthPerColumn = Math.floor(maxWidth / 3);
+            if (remain > maxWidthPerColumn) counter += 1;
+            if (inProgress > maxWidthPerColumn) counter += 1;
+            if (done > maxWidthPerColumn) counter += 1;
+            var subtractiveWidthPerColumn = Math.floor((effort - maxWidth) / counter);
+            if (remain > maxWidthPerColumn) {
+                width.sprintPointsRemain = remain - subtractiveWidthPerColumn;
+            }
+            if (inProgress > maxWidthPerColumn) {
+                width.sprintPointsInProgress = inProgress - subtractiveWidthPerColumn;
+            }
+            if (done > maxWidthPerColumn) {
+                width.sprintPointsDone = done - subtractiveWidthPerColumn;
+            }
+        } else {
+            var maxWidthPerColumn = 8;
+            if (remain > maxWidthPerColumn) counter += 1;
+            if (inProgress > maxWidthPerColumn) counter += 1;
+            if (done > maxWidthPerColumn) counter += 1;
+            var additionalWidthPerColumn = Math.floor((maxWidth - effort) / counter);
+            if (remain > additionalWidthPerColumn) {
+                width.sprintPointsRemain = remain + additionalWidthPerColumn;
+            }
+            if (inProgress > additionalWidthPerColumn) {
+                width.sprintPointsInProgress = inProgress + additionalWidthPerColumn;
+            }
+            if (done > additionalWidthPerColumn) {
+                width.sprintPointsDone = done + additionalWidthPerColumn;
             }
         }
+        return width;
+    };
 
+    new cronJob(config.cronInterval, function() {
+        var sprint = { points: { effort: 0, done: 0, remain: 0, inProgress: 0 }};
         apiClient('UserStories')
             .where("Teamiteration.IsCurrent eq 'true'")
             .context(config.api.context)
@@ -58,26 +88,29 @@ try {
                 if (data.length > 0) {
                     data.forEach(function (story) {
                         sprint.points.effort += story.Effort;
-                        sprint.points.done += story.EffortCompleted;
-                        sprint.points.remain += story.EffortToDo;
                         if (story.EntityState.Name != 'Open' && story.EntityState.Name != 'Done') {
                             sprint.points.inProgress += story.Effort;
                         }
+                        if (story.EntityState.Name == 'Done') {
+                            sprint.points.done += story.EffortCompleted;
+                        }
+                        if (story.EntityState.Name == 'Open') {
+                            sprint.points.remain += story.EffortToDo;
+                        }
                     });
 
-                    var inProgress = Math.ceil(sprint.points.inProgress);
-                    var remain = Math.ceil(sprint.points.remain) - inProgress;
-                    var done = Math.ceil(sprint.points.done);
+                    var inProgress = Math.floor(sprint.points.inProgress);
+                    var done = Math.floor(sprint.points.done);
+                    var remain = Math.floor(sprint.points.remain);
 
                     send_event(config.eventName, {
                         sprintPointsRemain: remain,
                         sprintPointsInProgress: inProgress,
                         sprintPointsDone: done,
-                        sprintHealth: true
+                        width: getSprintPointHealthWidths(sprint.points.effort, remain, inProgress, done)
                     })
                 }
             });
-
 
         apiClient('TeamIterations')
             .where("IsCurrent eq 'true'")

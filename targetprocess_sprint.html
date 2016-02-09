@@ -10,7 +10,7 @@
 
 <div class="health-title">Overall sprint progress (Story Points)</div>
 <div class="sprint-health sprint-points-health">
-    <div class="remain" data-bind="sprintPointsRemain"></div>
-    <div class="in-progress" data-bind="sprintPointsInProgress"></div>
-    <div class="done" data-bind="sprintPointsDone"></div>
+    <div class="remain" data-bind="sprintPointsRemain" data-bind-style="width.sprintPointsRemain | prepend 'width:' | append '%;'"></div>
+    <div class="in-progress" data-bind="sprintPointsInProgress" data-bind-style="width.sprintPointsInProgress | prepend 'width:' | append '%;'"></div>
+    <div class="done" data-bind="sprintPointsDone" data-bind-style="width.sprintPointsDone | prepend 'width:' | append '%;'"></div>
 </div>
