@@ -39,45 +39,6 @@ try {
         return index;
     };
 
-    var getSprintPointHealthWidths = function(effort, remain, inProgress, done) {
-        var width = {};
-        var maxWidth = 100;
-        var counter = 0;
-
-        if (effort > maxWidth) {
-            var maxWidthPerColumn = Math.floor(maxWidth / 3);
-            if (remain > maxWidthPerColumn) counter += 1;
-            if (inProgress > maxWidthPerColumn) counter += 1;
-            if (done > maxWidthPerColumn) counter += 1;
-            var subtractiveWidthPerColumn = Math.floor((effort - maxWidth) / counter);
-            if (remain > maxWidthPerColumn) {
-                width.sprintPointsRemain = remain - subtractiveWidthPerColumn;
-            }
-            if (inProgress > maxWidthPerColumn) {
-                width.sprintPointsInProgress = inProgress - subtractiveWidthPerColumn;
-            }
-            if (done > maxWidthPerColumn) {
-                width.sprintPointsDone = done - subtractiveWidthPerColumn;
-            }
-        } else {
-            var maxWidthPerColumn = 8;
-            if (remain > maxWidthPerColumn) counter += 1;
-            if (inProgress > maxWidthPerColumn) counter += 1;
-            if (done > maxWidthPerColumn) counter += 1;
-            var additionalWidthPerColumn = Math.floor((maxWidth - effort) / counter);
-            if (remain > additionalWidthPerColumn) {
-                width.sprintPointsRemain = remain + additionalWidthPerColumn;
-            }
-            if (inProgress > additionalWidthPerColumn) {
-                width.sprintPointsInProgress = inProgress + additionalWidthPerColumn;
-            }
-            if (done > additionalWidthPerColumn) {
-                width.sprintPointsDone = done + additionalWidthPerColumn;
-            }
-        }
-        return width;
-    };
-
     new cronJob(config.cronInterval, function() {
         var sprint = { points: { effort: 0, done: 0, remain: 0, inProgress: 0 }};
         apiClient('UserStories')
@@ -99,15 +60,10 @@ try {
                         }
                     });
 
-                    var inProgress = Math.floor(sprint.points.inProgress);
-                    var done = Math.floor(sprint.points.done);
-                    var remain = Math.floor(sprint.points.remain);
-
                     send_event(config.eventName, {
-                        sprintPointsRemain: remain,
-                        sprintPointsInProgress: inProgress,
-                        sprintPointsDone: done,
-                        width: getSprintPointHealthWidths(sprint.points.effort, remain, inProgress, done)
+                        sprintPointsRemain: Math.floor(sprint.points.remain),
+                        sprintPointsInProgress: Math.floor(sprint.points.inProgress),
+                        sprintPointsDone: Math.floor(sprint.points.done)
                     })
                 }
             });

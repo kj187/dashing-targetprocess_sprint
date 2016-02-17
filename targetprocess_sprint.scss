@@ -39,35 +39,37 @@
     text-align: left;
   }
 
-  .sprint-health {
-    width: 100%;
-    clear: both;
-    margin-bottom: 10px;
+  .sprint-points-health {
+    max-width: 100%;
+    margin: 0 auto;
 
-    div {
-      box-sizing: border-box;
-      float:left;
-      padding: 3px;
-      min-width: 8%;
-      height: 25px;
-      font-size: 12px;
+    .progress {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
     }
 
-    .remain {
-      background-color: #D04437;
-      border: 0px !important;
+    .progress .bar {
+      padding: 10px;
+      height: 20px;
+      background: #ccc;
+      -webkit-box-flex: 1;
+      -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
+      flex-grow: 1;
+      font-size: 16px;
     }
-
-    .in-progress {
+    .progress .remain {
+      background: #D04437;
+    }
+    .progress .in-progress {
       color: #666666;
-      background-color: #FFD351;
-      border: 0px !important;
+      background: #FFD351;
     }
-
-    .done {
-      background-color: #14892C;
-      border: 0px !important;
+    .progress .done {
+      background: #14892C;
     }
   }
-
 }
+
