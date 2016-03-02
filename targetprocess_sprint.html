@@ -12,7 +12,18 @@
 <div class="sprint-points-health">
     <div class="progress">
         <div data-bind-style="sprintPointsRemain | prepend 'flex-basis:' | append '%;'" class="bar remain" data-bind="sprintPointsRemain"></div>
-        <div data-bind-style="sprintPointsInProgress | prepend 'flex-basis:' | append '%;'" class="bar in-progress" data-bind="sprintPointsInProgress"></div>
+        <div data-bind-style="sprintPointsInProgressAll | prepend 'flex-basis:' | append '%;'" class="bar in-progress" data-bind="sprintPointsInProgressAll"></div>
         <div data-bind-style="sprintPointsDone | prepend 'flex-basis:' | append '%;'" class="bar done" data-bind="sprintPointsDone"></div>
+    </div>
+</div>
+
+<div class="sprint-points-health-details">
+    <div data-showif="sprintPointsInProgressInTesting">
+        <span class="count in-testing" data-bind="sprintPointsInProgressInTesting"></span>
+        <span class="label">In Testing</span>
+    </div>
+    <div data-showif="sprintPointsInProgressApproval">
+        <span class="count approval" data-bind="sprintPointsInProgressApproval"></span>
+        <span class="label">Waiting for approval</span>
     </div>
 </div>
