@@ -9,7 +9,6 @@ try {
     var apiClient = targetprocessApi({
         domain: config.api.host,
         token: config.api.token,
-        //acid: config.api.context,
         version: config.api.version,
         protocol: config.api.protocol,
     });
@@ -41,44 +40,63 @@ try {
 
     var update = function() {
         var sprint = { points: { effort: 0, done: 0, remain: 0, inProgress: { all: 0, inTesting: 0, approval: 0 } }};
-        apiClient('UserStories')
-            .where("Teamiteration.IsCurrent eq 'true'")
-            .context(config.api.context)
-            .then(function(error, data) {
-                if (error) return console.log('Error:', error)
-                if (data.length > 0) {
-                    data.forEach(function (story) {
-                        sprint.points.effort += story.Effort;
-                        if (story.EntityState.Name != 'Open' && story.EntityState.Name != 'Done') {
-                            sprint.points.inProgress.all += story.Effort;
-                        }
-                        if (story.EntityState.Name == 'Done') {
-                            sprint.points.done += story.EffortCompleted;
-                        }
-                        if (story.EntityState.Name == 'Open') {
-                            sprint.points.remain += story.EffortToDo;
-                        }
+        var collectedSources = 0;
 
-                        if (story.EntityState.Name == 'In Testing') {
-                            sprint.points.inProgress.inTesting += story.Effort;
-                        }
-                        if (story.EntityState.Name == 'Approval') {
-                            sprint.points.inProgress.approval += story.Effort;
-                        }
-                    });
+        var whereClause = "(TeamIteration.IsCurrent eq 'true')";
+        if (config.api.team) {
+            whereClause += " and (Team.Id eq" + config.api.team + ")";
+        }
 
-                    send_event(config.eventName, {
-                        sprintPointsRemain: Math.floor(sprint.points.remain),
-                        sprintPointsInProgressAll: Math.floor(sprint.points.inProgress.all),
-                        sprintPointsInProgressInTesting: Math.floor(sprint.points.inProgress.inTesting),
-                        sprintPointsInProgressApproval: Math.floor(sprint.points.inProgress.approval),
-                        sprintPointsDone: Math.floor(sprint.points.done)
-                    })
-                }
-            });
+        var updateProgressbar = function(sprint) {
+            send_event(config.eventName, {
+                sprintPointsRemain: Math.round(sprint.points.remain),
+                sprintPointsInProgressAll: Math.round(sprint.points.inProgress.all),
+                sprintPointsInProgressInTesting: Math.round(sprint.points.inProgress.inTesting),
+                sprintPointsInProgressApproval: Math.round(sprint.points.inProgress.approval),
+                sprintPointsDone: Math.round(sprint.points.done)
+            })
+        };
+
+        var updateSprintData = function(error, data) {
+            collectedSources += 1;
+            if (error) return console.log('Error:', error);
+            if (data.length > 0) {
+                data.forEach(function (entity) {
+                    sprint.points.effort += entity.Effort;
+                    if (entity.EntityState.Name != 'Open' && entity.EntityState.Name != 'Done') {
+                        sprint.points.inProgress.all += entity.Effort;
+                    }
+                    if (entity.EntityState.Name == 'Done') {
+                        sprint.points.done += entity.EffortCompleted;
+                    }
+                    if (entity.EntityState.Name == 'Open') {
+                        sprint.points.remain += entity.EffortToDo;
+                    }
+
+                    if (entity.EntityState.Name == 'In Testing') {
+                        sprint.points.inProgress.inTesting += entity.Effort;
+                    }
+                    if (entity.EntityState.Name == 'Approval') {
+                        sprint.points.inProgress.approval += entity.Effort;
+                    }
+                });
+            }
+
+            if (collectedSources == 2) {
+                updateProgressbar(sprint);
+            }
+        };
+
+        apiClient('UserStories').where(whereClause).context(config.api.context).then(updateSprintData);
+        apiClient('Bugs').where(whereClause).context(config.api.context).then(updateSprintData);
+
+        var whereClause = "(IsCurrent eq 'true')";
+        if (config.api.team) {
+            whereClause += " and (Team.Id eq" + config.api.team + ")";
+        }
 
         apiClient('TeamIterations')
-            .where("IsCurrent eq 'true'")
+            .where(whereClause)
             .context(config.api.context)
             .then(function(error, data) {
                 if (error) return console.log('Error:', error)
